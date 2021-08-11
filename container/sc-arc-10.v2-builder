@@ -1,0 +1,84 @@
+Bootstrap:docker
+From:nfcore/base
+
+%labels
+	MAINTAINER Per Brattås <per.brattas@med.lu.se>
+	DESCRIPTION Singularity container Cellranger-v1 multiome ARC
+	VERSION 0.0.1
+
+%environment
+	PATH=/opt/cellranger-arc-2.0.0:/opt/bin:$PATH
+
+
+%files
+	/data/bnf/sw/bcl2fastq2-v2.20.0.422-Source.tar.gz /opt   
+
+%post
+	rm -rf /var/lib/apt/lists/*
+	apt -y clean
+	apt -y update
+	apt -y install libz-dev build-essential gettext cmake libxml2-dev libcurl4-openssl-dev libssl-dev make libbz2-dev libboost-dev python3-pip sudo unzip
+
+	mkdir -p /usr/share/man/man1
+	
+	sudo apt -y install default-jre	
+
+	# download/install fastqc
+	mkdir -p /opt/bin
+	cd /opt/bin/
+	wget https://www.bioinformatics.babraham.ac.uk/projects/fastqc/fastqc_v0.11.9.zip
+	unzip fastqc_v0.11.9.zip
+	chmod -R 777 FastQC
+	cd -
+
+        ln -s /opt/bin/FastQC/fastqc /opt/bin/
+
+	# WGET CELLRANGER ARC
+	cd /opt
+
+	wget -O cellranger-arc-2.0.0.tar.gz "https://cf.10xgenomics.com/releases/cell-arc/cellranger-arc-2.0.0.tar.gz?Expires=1628029164&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZi4xMHhnZW5vbWljcy5jb20vcmVsZWFzZXMvY2VsbC1hcmMvY2VsbHJhbmdlci1hcmMtMi4wLjAudGFyLmd6IiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNjI4MDI5MTY0fX19XX0_&Signature=W4R4F0qTEshmdkT~A-JLDs2TM8XfXVYroeHEzRPlsdVhn1sE1lBiY7mJbsIrfWwyL-9ExB5Ewm8HA7IoHIqk90QwGWZdhgdNIjtgZLATyolBqlIRKCurtgbPrPXIZbdilnx05AkkeLKqy0bOoCyjaqu6USjGdpkBiUVc-eBnMcGzgvJiQDRpcBYeIlN4Y-nZnxr6EkzcjDJczRm0HmwNxjYYpFv17USGYWFTC4yBscWCkxy5bda~5KRfhkESDColKN-v2JDxevWfmN1M4znGFSMDAcf2hGLX91IbZBEo-KPu~QM7HOqe~vfd1JtqJGDfhiAYorp58YF6RGXBU89XWQ__&Key-Pair-Id=APKAI7S6A5RYOXBWRPDA"
+
+	# TAR CELLRANGER 
+	tar -zxvf cellranger-arc-2.0.0.tar.gz
+
+	# WGET CR v5 references
+	# HUMAN ref
+	# GRCh38 - gencode v32/Ensembl98
+	wget https://cf.10xgenomics.com/supp/cell-arc/refdata-cellranger-arc-GRCh38-2020-A-2.0.0.tar.gz
+
+	tar -zxvf refdata-cellranger-arc-GRCh38-2020-A-2.0.0.tar.gz
+
+	# mm10 - gencode vM23 /Ensembl98
+	wget https://cf.10xgenomics.com/supp/cell-arc/refdata-cellranger-arc-mm10-2020-A-2.0.0.tar.gz
+
+	tar -zxvf refdata-cellranger-arc-mm10-2020-A-2.0.0.tar.gz
+	
+	cd -
+
+
+	# Setup multiqc
+	pip3 install multiqc
+
+	# Setup bcl2fastq
+	export TMP=/tmp
+	export SOURCE=/tmp${TMP}/bcl2fastq
+	export BUILD=${TMP}/bcl2fastq2-v2.20.0-build
+	export INSTALL_DIR=${SINGULARITY_ROOTFS}/opt/bcl2fastq2-v2.20.0
+
+
+        mkdir -p /opt/bcl2fastq
+        cd /opt/bcl2fastq
+        mkdir -p build
+
+	export C_INCLUDE_PATH=/usr/include/x86_64-linux-gnu
+
+	tar -xzvf /opt/bcl2fastq2-v2.20.0.422-Source.tar.gz
+        chmod ugo+x bcl2fastq/src/configure
+        chmod ugo+x bcl2fastq/src/cmake/bootstrap/installCmake.sh
+        cd build
+        ../bcl2fastq/src/configure --prefix=/opt/
+        make
+        make install
+
+
+	 
