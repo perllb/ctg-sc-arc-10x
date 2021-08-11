@@ -56,9 +56,9 @@ Cellranger-arc version: cellranger-arc v2.0.0
 
 ## Handle dual and single indexing in same sequencing run
 
-If your RNA and ADT/HTO libraries have different indexing it can be handled as following:
+If your RNA and ATAC libraries have different indexing it can be handled as following:
 
-#### RNA dual - ADT/HTO single
+#### RNA dual - ATAC single
 In nextflow.config, set 
 ```
 // bcl2fastq arguments
