@@ -7,12 +7,13 @@ From:nfcore/base
 	VERSION 0.0.1
 
 %environment
-	PATH=/opt/cellranger-arc-2.0.0:/opt/bin:$PATH
+	PATH=/opt/bin:/opt/conda/envs/ngs-tools/bin/:/opt/cellranger-arc-2.0.0:/opt/bin:$PATH
 
 
 %files
 	/data/bnf/sw/bcl2fastq2-v2.20.0.422-Source.tar.gz /opt   
-
+	environment.yml /
+	
 %post
 	rm -rf /var/lib/apt/lists/*
 	apt -y clean
@@ -22,6 +23,13 @@ From:nfcore/base
 	mkdir -p /usr/share/man/man1
 	
 	sudo apt -y install default-jre	
+
+	# set up conda
+        /opt/conda/bin/conda env create -f /environment.yml
+
+	#install latest multiqc 1.11dev
+        pip3 install --upgrade --force-reinstall git+https://github.com/ewels/MultiQC.git
+	
 
 	# download/install fastqc
 	mkdir -p /opt/bin
@@ -36,7 +44,7 @@ From:nfcore/base
 	# WGET CELLRANGER ARC
 	cd /opt
 
-	wget -O cellranger-arc-2.0.0.tar.gz "https://cf.10xgenomics.com/releases/cell-arc/cellranger-arc-2.0.0.tar.gz?Expires=1628029164&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZi4xMHhnZW5vbWljcy5jb20vcmVsZWFzZXMvY2VsbC1hcmMvY2VsbHJhbmdlci1hcmMtMi4wLjAudGFyLmd6IiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNjI4MDI5MTY0fX19XX0_&Signature=W4R4F0qTEshmdkT~A-JLDs2TM8XfXVYroeHEzRPlsdVhn1sE1lBiY7mJbsIrfWwyL-9ExB5Ewm8HA7IoHIqk90QwGWZdhgdNIjtgZLATyolBqlIRKCurtgbPrPXIZbdilnx05AkkeLKqy0bOoCyjaqu6USjGdpkBiUVc-eBnMcGzgvJiQDRpcBYeIlN4Y-nZnxr6EkzcjDJczRm0HmwNxjYYpFv17USGYWFTC4yBscWCkxy5bda~5KRfhkESDColKN-v2JDxevWfmN1M4znGFSMDAcf2hGLX91IbZBEo-KPu~QM7HOqe~vfd1JtqJGDfhiAYorp58YF6RGXBU89XWQ__&Key-Pair-Id=APKAI7S6A5RYOXBWRPDA"
+	wget -O cellranger-arc-2.0.0.tar.gz "https://cf.10xgenomics.com/releases/cell-arc/cellranger-arc-2.0.0.tar.gz?Expires=1628723083&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9jZi4xMHhnZW5vbWljcy5jb20vcmVsZWFzZXMvY2VsbC1hcmMvY2VsbHJhbmdlci1hcmMtMi4wLjAudGFyLmd6IiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNjI4NzIzMDgzfX19XX0_&Signature=fZfuudd78xa52wLHX1uGJKKJiW~JskCxSdTjjZWkVosQWj7ZYtO6d7E40vzxfczd3bF4YGjBA2YRnfLFHzLqXq~JlRptJE~WCd2Ihxx~7lyqG~8SnjigO~RIg8AJahKBDl~HUmJeCD45sPUlD2btWq3FjdpCnA9nZrDPsQnWud7W-Sg2~J9GG9AVT~XF0iP6cuRj9kBAk3FFb~-HvecdkGkCG-gF7Uzhf6w5iulApOdirO8YxsHWAhWN6A6jKhY9tG0av4F7XFqPadnPdyd5BYxYmS3PnnxszypPyXIHyvUXMFLa~4a1x922GmkUbMTcXRMrF~BgijIrdLhxsJEsQA__&Key-Pair-Id=APKAI7S6A5RYOXBWRPDA"
 
 	# TAR CELLRANGER 
 	tar -zxvf cellranger-arc-2.0.0.tar.gz
