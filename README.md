@@ -1,5 +1,5 @@
 # ctg-sc-arc-10x
-## nextflow pipeline for 10x-sc-ARC (multiome RNA+ATAC) analysis with cellranger-arc
+## nextflow pipeline for 10x-sc-ARC (10x multiome RNA+ATAC) analysis with cellranger-arc
 
 - Analyze 10x arc-seq (RNA + ATAC) in one pipeline. 
 - Demux -> cellranger-arc -> QC
@@ -17,7 +17,7 @@ nohup nextflow run pipe-sc-arc-10x.nf > log.pipe-sc-arc-10x.txt &
 
 ## Input files
 
-1. Samplesheet 
+1. Samplesheet (CTG_SampleSheet.sc-arc-10x.csv)
 
 ### Samplesheet requirements:
 
