@@ -17,6 +17,8 @@ nohup nextflow run pipe-sc-arc-10x.nf > log.pipe-sc-arc-10x.txt &
 
 ## Input files
 
+The following files must be in the runfolder to start pipeline successfully.
+
 1. Samplesheet (CTG_SampleSheet.sc-arc-10x.csv)
 
 ### Samplesheet requirements:
