@@ -15,9 +15,29 @@
 nohup nextflow run pipe-sc-arc-10x.nf > log.pipe-sc-arc-10x.txt &
 ```
 
-## Input
+## Input files
 
-- Samplesheet (see `SampleSheet` section below)
+1. Samplesheet 
+
+### Samplesheet requirements:
+
+
+ | Sample_ID | index | Sample_Project | Sample_Species | Sample_Lib | Sample_Pair | 
+ | --- | --- | --- | --- | --- | --- | 
+ | Sr1 | SI-GA-D9 | proj_2021_012 | human | rna | 1 |
+ | Sr2 | SI-GA-H9 | proj_2021_012 | human | rna | 2 |
+ | Sat1 | SI-GA-C9 | proj_2021_012 | human | atac | 1 |
+ | Sat2 | SI-GA-C9 | proj_2021_012 | human | atac | 2 |
+
+- The nf-pipeline takes the following Columns from samplesheet to use in channels:
+
+
+- `Sample_ID` : ID of sample. Sample_ID can only contain a-z, A-Z and "_".  E.g space and hyphen ("-") are not allowed! If 'Sample_Name' is present, it will be ignored. 
+- `index` : Must use index ID (10x ID) if dual index. For single index, the index sequence works too.
+- `Sample_Project` : Project ID. E.g. 2021_033, 2021_192.
+- `Sample_Species` : Only 'human'/'mouse'/'custom' are accepted. If species is not human or mouse, set 'custom'. This custom reference genome has to be specified in the nextflow config file. See below how to edit the config file.
+- `Sample_Lib` : 'rna'/'atac'. Specify whether sample is rna or atac library. 
+- `Sample_Pair` : To match the rna sample with the corresponding atac sample. e.g. in the example above, sample 'Sr1' is the rna library, that should be matched with 'Sat1' which is the atac library of the sample
 
 ## Pipeline steps:
 
@@ -34,25 +54,6 @@ Cellranger-arc version: cellranger-arc v2.0.0
 * `md5sum`: md5sum of all generated files
 
 
-## Samplesheet requirements:
-
-
- | Sample_ID | index | Sample_Project | Sample_Species | Sample_Lib | Sample_Pair | 
- | --- | --- | --- | --- | --- | --- | 
- | Sr1 | SI-GA-D9 | proj_2021_012 | human | rna | 1 |
- | Sr2 | SI-GA-H9 | proj_2021_012 | human | rna | 2 |
- | Sat1 | SI-GA-C9 | proj_2021_012 | human | atac | 1 |
- | Sat2 | SI-GA-C9 | proj_2021_012 | human | atac | 2 |
-
-- The nf-pipeline takes the following Columns from samplesheet to use in channels:
-
-
-- `Sample_ID` : ID of sample. ('Sample_Name' will be ignored)
-- `index` : Must use index ID if dual. For single, index sequence works too.
-- `Sample_Project` : Project ID
-- `Sample_Species` : 'human'/'mouse'/'custom' - if custom, see below how to edit the config file
-- `Sample_Lib` : 'rna'/'atac'
-- `Sample_Pair` : To match the rna sample with the corresponding atac sample. e.g. in the example above, sample 'Sr1' is the rna library, that should be matched with 'Sat1' which is the atac library of the sample
 
 ## Handle dual and single indexing in same sequencing run
 
