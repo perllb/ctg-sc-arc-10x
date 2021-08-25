@@ -41,9 +41,9 @@ Note: Must be in comma-separated values format (.csv)
 - `Sample_Lib` : 'rna'/'atac'. Specify whether sample is rna or atac library. 
 - `Sample_Pair` : To match the rna sample with the corresponding atac sample. e.g. in the example above, sample 'Sr1' is the rna library, that should be matched with 'Sat1' which is the atac library of the sample
 
-### CSV format templates
+### Samplesheet template
 
-#### 1. Samplesheet : `CTG_SampleSheet.sc-arc-10x.csv`
+#### Samplesheet name : `CTG_SampleSheet.sc-arc-10x.csv`
 ```
 Sample_ID,index,Sample_Project,Sample_Species,Sample_Lib,Sample_Pair
 Si1,SI-GA-D9,2021_012,human,rna,1
