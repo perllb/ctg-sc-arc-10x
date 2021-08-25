@@ -22,6 +22,7 @@ nohup nextflow run pipe-sc-arc-10x.nf > log.pipe-sc-arc-10x.txt &
 ### Samplesheet requirements:
 
 Note: no header! only the rows shown below, starting with the column names.
+Note: Must be in comma-separated values format (.csv)
 
  | Sample_ID | index | Sample_Project | Sample_Species | Sample_Lib | Sample_Pair | 
  | --- | --- | --- | --- | --- | --- | 
@@ -39,6 +40,15 @@ Note: no header! only the rows shown below, starting with the column names.
 - `Sample_Species` : Only 'human'/'mouse'/'custom' are accepted. If species is not human or mouse, set 'custom'. This custom reference genome has to be specified in the nextflow config file. See below how to edit the config file.
 - `Sample_Lib` : 'rna'/'atac'. Specify whether sample is rna or atac library. 
 - `Sample_Pair` : To match the rna sample with the corresponding atac sample. e.g. in the example above, sample 'Sr1' is the rna library, that should be matched with 'Sat1' which is the atac library of the sample
+
+#### CSV format template
+```
+Sample_ID,index,Sample_Project,Sample_Species,Sample_Lib,Sample_Pair
+Si1,Sn1,SI-GA-D9,2021_012,human,rna,1
+Si2,Sn2,SI-GA-H9,2021_012,human,rna,2
+Sample1,S1,SI-GA-C9,2021_013,mouse,atac,1
+Sample2,S23,SI-GA-C9,2021_013,mouse,atac,2
+``` 
 
 ## Pipeline steps:
 
