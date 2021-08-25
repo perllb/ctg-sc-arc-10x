@@ -21,6 +21,7 @@ nohup nextflow run pipe-sc-arc-10x.nf > log.pipe-sc-arc-10x.txt &
 
 ### Samplesheet requirements:
 
+Note: no header! only the rows shown below, starting with the column names.
 
  | Sample_ID | index | Sample_Project | Sample_Species | Sample_Lib | Sample_Pair | 
  | --- | --- | --- | --- | --- | --- | 
@@ -117,7 +118,7 @@ Example:
  2. In nextflow.config, set 
  `custom_genome=/PATH/TO/CUSTOMGENOME`
  
-### Add custom genes (e.g. reporters) to cellranger annotation
+## Add custom genes (e.g. reporters) to cellranger annotation
 
 Use the `ctg-cellranger-add2ref` script. 
 
