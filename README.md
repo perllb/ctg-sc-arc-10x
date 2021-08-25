@@ -47,8 +47,8 @@ Note: Must be in comma-separated values format (.csv)
 ```
 Sample_ID,index,Sample_Project,Sample_Species,Sample_Lib,Sample_Pair
 Si1,SI-GA-D9,2021_012,human,rna,1
-Si2,SI-GA-H9,2021_012,human,rna,2
-Sample1,SI-GA-C9,2021_013,mouse,atac,1
+Si2,SI-GA-H9,2021_012,mouse,rna,2
+Sample1,SI-GA-C9,2021_013,human,atac,1
 Sample2,SI-GA-C9,2021_013,mouse,atac,2
 ``` 
 
