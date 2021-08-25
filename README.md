@@ -46,10 +46,10 @@ Note: Must be in comma-separated values format (.csv)
 #### 1. Samplesheet : `CTG_SampleSheet.sc-arc-10x.csv`
 ```
 Sample_ID,index,Sample_Project,Sample_Species,Sample_Lib,Sample_Pair
-Si1,Sn1,SI-GA-D9,2021_012,human,rna,1
-Si2,Sn2,SI-GA-H9,2021_012,human,rna,2
-Sample1,S1,SI-GA-C9,2021_013,mouse,atac,1
-Sample2,S23,SI-GA-C9,2021_013,mouse,atac,2
+Si1,SI-GA-D9,2021_012,human,rna,1
+Si2,SI-GA-H9,2021_012,human,rna,2
+Sample1,SI-GA-C9,2021_013,mouse,atac,1
+Sample2,SI-GA-C9,2021_013,mouse,atac,2
 ``` 
 
 ## Pipeline steps:
